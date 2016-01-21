@@ -1,2 +1,3 @@
 # conky_scripts
-Conky scripts.
+
+Conky files for use with conky, the linux utility.

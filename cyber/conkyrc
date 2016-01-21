@@ -1,0 +1,119 @@
+# Swap Usage:$color $swapperc%${color lightgrey}
+
+# the ${template x x x} command uses /sys/bus/platform/devices
+# for this to work you need both lm-sensors and hddtemp get both from main repos
+# set to yes if you want Conky to be forked in the background
+background no
+
+own_window yes
+own_window_type desktop
+own_window_transparent yes
+own_window_hints undecorated,below,sticky,skip_taskbar,skip_pager
+out_to_console no
+use_xft yes
+xftfont monospace:size=8
+update_interval 2
+
+# fixing window transparency
+own_window_argb_visual yes
+own_window_argb_value 255
+
+# Create own window instead of using desktop (required in nautilus)
+own_window yes
+
+# Use double buffering (reduces flicker, may not work for everyone)
+double_buffer yes
+maximum_width 480 #258
+
+draw_shades no
+
+# Draw outlines?
+draw_outline no
+
+# Draw borders around text
+draw_borders no
+
+draw_graph_borders yes
+
+# Stippled borders?
+stippled_borders 10
+
+# border margins
+#border_margin 4
+
+# border width
+border_width 1
+
+# Default colors and also border colors
+default_color white
+default_shade_color white
+default_outline_color white
+
+# Text alignment, other possible values are commented
+#alignment top_left
+#minimum_size 10 10
+alignment top_right
+#alignment bottom_left
+#alignment bottom_right
+
+# Gap between borders of screen and text
+gap_x 12
+gap_y 37
+# Add spaces to keep things from moving about?  This only affects certain objects.
+use_spacer left
+
+# Subtract file system buffers from used memory?
+no_buffers yes
+
+# set to yes if you want all text to be in uppercase
+uppercase no
+
+TEXT
+
+${color #61D6C4}$nodename$color ${alignc}$sysname $kernel ${alignr}$color${time %l:%M:%p}
+${color #61D6C4}Uptime:$color $uptime ${color lightgrey}- ${color #61D6C4}Load:$color $loadavg${color lightgrey}
+$color$stippled_hr${color lightgrey}
+${color #61D6C4}CPU:$color ${cpu}% ${color #61D6C4}${cpubar 5,85}   ${color #61D6C4}Disk I/O: $color${diskio}
+${color #61D6C4}${cpugraph 0 32,155 104E8B 0077ff} $alignr${color #61D6C4}${diskiograph 32,155 104E8B 0077ff 750}
+${color #61D6C4}Core0:$color ${cpu cpu1}% ${alignr}${cpubar cpu1 6,120}
+${color #61D6C4}Core1:$color ${cpu cpu2}% ${alignr}${cpubar cpu2 6,120}
+${color #61D6C4}Core2:$color ${cpu cpu3}% ${alignr}${cpubar cpu3 6,120}
+${color #61D6C4}Core3:$color ${cpu cpu4}% ${alignr}${cpubar cpu4 6,120}${color grey}
+$color$stippled_hr${color lightgrey}
+${color #61D6C4}RAM Usage: $color$mem/${color}$memmax
+${color}           $memperc%${color lightgrey} ${membar}
+${color #61D6C4}Swap Usage:$color$swap/${color}$swapmax
+${color}           $swapperc%${color lightgrey} ${swapbar}
+$color$stippled_hr${color lightgrey}
+${color #61D6C4}File systems:
+ ${color #61D6C4}/          $color${fs_used /}/${fs_size /}${alignr}${color #61D6C4}${fs_bar 5,120 /}
+ ${color #61D6C4}/home      $color${fs_used /home}/${fs_size /home}${alignr}${color #61D6C4}${fs_bar 5,120 /home}
+$color$stippled_hr${color lightgrey}
+${color #61D6C4}Processes:${color} $processes  ${color #61D6C4}Running:$color$running_processes
+${color}Name                   PID    CPU%   MEM%
+${color #61D6C4} ${top name 1}     ${top pid 1} ${top cpu 1} ${top mem 1}
+${color lightgrey} ${top name 2}     ${top pid 2} ${top cpu 2} ${top mem 2}
+${color lightgrey} ${top name 3}     ${top pid 3} ${top cpu 3} ${top mem 3}
+${color}Mem usage
+${color #61D6C4} ${top_mem name 1}     ${top_mem pid 1} ${top_mem cpu 1} ${top_mem mem 1}
+${color lightgrey} ${top_mem name 2}     ${top_mem pid 2} ${top_mem cpu 2} ${top_mem mem 2}
+${color lightgrey} ${top_mem name 3}     ${top_mem pid 3} ${top_mem cpu 3} ${top_mem mem 3}
+$color$stippled_hr${color lightgrey}
+${color #61D6C4}Entropy: ${color}${entropy_avail}${color #61D6C4}/${color}${entropy_poolsize} ${color #61D6C4}${entropy_bar}
+${color #61D6C4}Net Down:$color ${downspeed eth0} k/s      ${color #61D6C4}Net Up:$color ${upspeed eth0} k/s
+${color #61D6C4}${downspeedgraph eth0 32,155 104E8B 0077ff} $alignr${color #61D6C4}${upspeedgraph eth0 32,155 104E8B 0077ff}
+${color #61D6C4}Port(s)${alignr}#Connections
+
+$color Inbound: ${tcp_portmon 1 32767 count}  Outbound: ${tcp_portmon 32768 61000 count}${alignr} All: ${tcp_portmon 1 65535 count}
+${color #61D6C4}Outbound Connection ${alignr} Remote Service/Port$color
+ ${tcp_portmon 32768 61000 rhost 0} ${alignr} ${tcp_portmon 32768 61000 rservice 0}
+ ${tcp_portmon 32768 61000 rhost 1} ${alignr} ${tcp_portmon 32768 61000 rservice 1}
+ ${tcp_portmon 32768 61000 rhost 2} ${alignr} ${tcp_portmon 32768 61000 rservice 2}
+ ${tcp_portmon 32768 61000 rhost 3} ${alignr} ${tcp_portmon 32768 61000 rservice 3}
+ ${tcp_portmon 32768 61000 rhost 4} ${alignr} ${tcp_portmon 32768 61000 rservice 4}
+${color #61D6C4}Inbound Connection ${alignr} Local Service/Port$color
+ ${tcp_portmon 1 32767 rhost 0} ${alignr} ${tcp_portmon 1 32767 lservice 0}
+ ${tcp_portmon 1 32767 rhost 1} ${alignr} ${tcp_portmon 1 32767 lservice 1}
+ ${tcp_portmon 1 32767 rhost 2} ${alignr} ${tcp_portmon 1 32767 lservice 2}
+ ${tcp_portmon 1 32767 rhost 3} ${alignr} ${tcp_portmon 1 32767 lservice 3}
+ ${tcp_portmon 1 32767 rhost 4} ${alignr} ${tcp_portmon 1 32767 lservice 4}
